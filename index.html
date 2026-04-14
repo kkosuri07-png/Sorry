@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Cute Cat Kisses</title>
+<style>
+  body {
+    background: #ffeef2;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    font-family: Arial;
+    overflow: hidden;
+  }
+
+  .scene {
+    position: relative;
+    width: 400px;
+    height: 300px;
+  }
+
+  .cat {
+    position: absolute;
+    width: 120px;
+  }
+
+  .cat img {
+    width: 100%;
+  }
+
+  .cat1 {
+    left: 30px;
+    bottom: 50px;
+  }
+
+  .cat2 {
+    right: 30px;
+    bottom: 50px;
+  }
+
+  .kiss {
+    position: absolute;
+    font-size: 24px;
+    opacity: 0;
+    transition: all 0.3s ease;
+  }
+
+  .heart {
+    position: absolute;
+    font-size: 20px;
+    animation: floatUp 2s linear forwards;
+  }
+
+  @keyframes floatUp {
+    0% {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+    100% {
+      opacity: 0;
+      transform: translateY(-100px) scale(1.5);
+    }
+  }
+</style>
+</head>
+<body>
+
+<div class="scene" id="scene">
+  <!-- Cat giving kisses -->
+  <div class="cat cat1">
+    <img src="https://i.imgur.com/JIX9FhJ.png" alt="cat1">
+  </div>
+
+  <!-- Cat receiving kisses -->
+  <div class="cat cat2" id="targetCat">
+    <img src="https://i.imgur.com/1Xq9biB.png" alt="cat2">
+  </div>
+
+  <div class="kiss" id="kiss">💋</div>
+</div>
+
+<script>
+  const kiss = document.getElementById("kiss");
+  const target = document.getElementById("targetCat");
+  const scene = document.getElementById("scene");
+
+  function randomKiss() {
+    const x = Math.random() * 80 + 20;
+    const y = Math.random() * 60 + 20;
+
+    kiss.style.left = (target.offsetLeft + x) + "px";
+    kiss.style.top = (target.offsetTop + y) + "px";
+
+    kiss.style.opacity = 1;
+    kiss.style.transform = "scale(1.5)";
+
+    createHeart(target.offsetLeft + x, target.offsetTop + y);
+
+    setTimeout(() => {
+      kiss.style.opacity = 0;
+      kiss.style.transform = "scale(1)";
+    }, 300);
+  }
+
+  function createHeart(x, y) {
+    const heart = document.createElement("div");
+    heart.className = "heart";
+    heart.innerText = "💖";
+
+    heart.style.left = x + "px";
+    heart.style.top = y + "px";
+
+    scene.appendChild(heart);
+
+    setTimeout(() => {
+      heart.remove();
+    }, 2000);
+  }
+
+  setInterval(randomKiss, 500);
+</script>
+
+</body>
+</html>
